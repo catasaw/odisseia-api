@@ -1,10 +1,14 @@
-FROM python:2.7
+FROM php:7.1-apache
 
-ADD requirements.txt /app/requirements.txt
+RUN apt-get update \
+ && apt-get install -y\
+ less nano vim multitail screen htop curl git
 
-RUN apt-get update
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
-RUN pip install -r /app/requirements.txt
+RUN a2enmod rewrite
 
-EXPOSE 8000
+# Overwrite files
+ADD ./rootfs /
+
 
