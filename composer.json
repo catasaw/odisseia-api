@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "psr-4": {
+            "Odisseia\\": "src"
+        }
+    },
     "require": {
         "slim/slim": "^3.8",
         "doctrine/orm": "v2.3.6"
