@@ -10,22 +10,7 @@
 
 require 'vendor/autoload.php';
 
-
-$settings = array('meta' => [
-        'entity_path' => [
-            'src/Entity'
-        ],
-        'auto_generate_proxies' => true,
-        'proxy_dir' =>  __DIR__.'/../cache/proxies',
-        'cache' => null,
-    ],
-    'connection' => [
-        'driver'   => 'pdo_mysql',
-        'host'     => 'mysql',
-        'dbname'   => 'odisseia',    #replace with local db name
-        'user'     => 'root',      #replace with local variables
-        'password' => '1234',  #replace with local variables
-    ]);
+$settings = require 'settings.php';
 
 $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
     $settings['meta']['entity_path'],
