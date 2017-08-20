@@ -22,9 +22,9 @@ $settings = array('meta' => [
     'connection' => [
         'driver'   => 'pdo_mysql',
         'host'     => 'mysql',
-        'dbname'   => 'dbname',    #replace with local db name
-        'user'     => 'user',      #replace with local variables
-        'password' => 'password',  #replace with local variables
+        'dbname'   => 'odisseia',    #replace with local db name
+        'user'     => 'root',      #replace with local variables
+        'password' => '1234',  #replace with local variables
     ]);
 
 $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
