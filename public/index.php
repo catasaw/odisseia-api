@@ -4,12 +4,11 @@ use Slim\App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-
 $app = new App();
+$container = $app->getContainer();
 
-$app->get('/contributor', function (\Slim\Http\Request $request, \Slim\Http\Response $response) {
+$container['em'] = function ($c) {
     $settings = require __DIR__ . '/../settings.php';
-
     $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
         $settings['meta']['entity_path'],
         $settings['meta']['auto_generate_proxies'],
@@ -17,10 +16,19 @@ $app->get('/contributor', function (\Slim\Http\Request $request, \Slim\Http\Resp
         $settings['meta']['cache'],
         false
     );
+    return \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+};
 
-    $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
-    $contributorModel = new \Odisseia\Model\ContributorModel($entityManager);
-    return $response->withJson($contributorModel->findAll());
-});
+
+$container['Odisseia\Controller\ContributorController'] = function($c) {
+    $contributorModel = new \Odisseia\Model\ContributorModel($c->get('em'));
+    return new \Odisseia\Controller\ContributorController($contributorModel);
+};
+
+
+
+require '../src/Router/contributor.php';
+
+
 
 $app->run();
